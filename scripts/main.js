@@ -46,15 +46,35 @@ class PartyBook extends HandlebarsApplicationMixin(ApplicationV2) {
   static instances = new Map();
 
   static DEFAULT_OPTIONS = {
-    classes: ["party-book-app"],
-    position: { width: 780, height: 880 },
-    window: { resizable: true, icon: "fa-solid fa-book" },
-    actions: {
-      open: PartyBook._open, cover: PartyBook._cover, toc: PartyBook._toc, next: PartyBook._next, prev: PartyBook._prev,
-      goto: PartyBook._goto, bookmark: PartyBook._bookmark, addPage: PartyBook._addPage, editText: PartyBook._editText,
-      stylePage: PartyBook._stylePage, deletePage: PartyBook._deletePage, bookSettings: PartyBook._bookSettings, showDoc: PartyBook._showDoc
-    }
-  };
+  classes: ["party-book-app"],
+
+  position: {
+    width: 780,
+    height: 880
+  },
+
+  window: {
+    resizable: true,
+    icon: "fa-solid fa-book"
+  },
+
+  actions: {
+    open: this._open,
+    cover: this._cover,
+    toc: this._toc,
+    next: this._next,
+    prev: this._prev,
+
+    goto: this._goto,
+    bookmark: this._bookmark,
+    addPage: this._addPage,
+    editText: this._editText,
+    stylePage: this._stylePage,
+    deletePage: this._deletePage,
+    bookSettings: this._bookSettings,
+    showDoc: this._showDoc
+  }
+};
 
   static PARTS = { main: { template: `modules/${MODULE}/templates/book.hbs` } };
 
@@ -120,7 +140,12 @@ class PartyBook extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static _open() { this.view = "page"; this.render(); }
+  static _open(event, target) {
+    console.log("PARTY BOOK OPEN CLICK", this, event, target);
+
+    this.view = "page";
+    this.render();
+  }
   static _cover() { this.view = "cover"; this.render(); }
   static _toc() { this.view = "toc"; this.render(); }
   static _next() { this.pageIndex++; this.render(); }
