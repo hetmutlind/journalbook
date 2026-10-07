@@ -1,0 +1,16 @@
+<div class="pb-library">
+  <ul>
+    {{#each books}}
+    <li><button type="button" data-action="openBook" data-id="{{id}}"><i class="fa-solid fa-book"></i> <span>{{name}}</span> <small>{{pages}} pages</small></button></li>
+    {{else}}
+    <li class="pb-empty">No books yet.</li>
+    {{/each}}
+  </ul>
+  {{#if canCreate}}<button type="button" class="pb-new" data-action="newBook"><i class="fa-solid fa-plus"></i> New book</button>{{/if}}
+  {{#if isGM}}{{#if others.length}}
+  <div class="pb-convert">
+    <select name="convertId">{{#each others}}<option value="{{id}}">{{name}}</option>{{/each}}</select>
+    <button type="button" data-action="convert">Turn journal into book</button>
+  </div>
+  {{/if}}{{/if}}
+</div>

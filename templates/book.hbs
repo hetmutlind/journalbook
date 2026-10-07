@@ -1,0 +1,72 @@
+<div class="pb-book">
+  <div class="pb-toolbar">
+    <div class="pb-tb-group">
+      <button type="button" data-action="cover" data-tooltip="Cover"><i class="fa-solid fa-book"></i></button>
+      <button type="button" data-action="toc" data-tooltip="Contents"><i class="fa-solid fa-list-ol"></i></button>
+      {{#if isPage}}<button type="button" data-action="bookmark" data-tooltip="Bookmark this page" class="{{#if page.marked}}active{{/if}}"><i class="fa-solid fa-bookmark"></i></button>{{/if}}
+    </div>
+    <div class="pb-tb-group">
+      {{#if isPage}}{{#if page.canEdit}}
+        <button type="button" data-action="editText" data-tooltip="Edit text"><i class="fa-solid fa-pen"></i></button>
+        <button type="button" data-action="stylePage" data-tooltip="Page style"><i class="fa-solid fa-palette"></i></button>
+        <button type="button" data-action="deletePage" data-tooltip="Delete page"><i class="fa-solid fa-trash"></i></button>
+      {{/if}}{{/if}}
+      {{#if canAdd}}<button type="button" data-action="addPage" data-tooltip="Add page"><i class="fa-solid fa-file-circle-plus"></i></button>{{/if}}
+      {{#if isGM}}{{#if isPage}}<button type="button" data-action="showDoc" data-tooltip="Show this page to players as a document"><i class="fa-solid fa-scroll"></i></button>{{/if}}{{/if}}
+      {{#if canConfig}}<button type="button" data-action="bookSettings" data-tooltip="Book settings"><i class="fa-solid fa-gear"></i></button>{{/if}}
+    </div>
+  </div>
+
+  <div class="pb-stage">
+    {{#if isCover}}
+    <section class="pb-cover" style="{{cover.style}}">
+      <div class="pb-cover-frame">
+        <h1>{{cover.title}}</h1>
+        {{#if cover.subtitle}}<h3>{{cover.subtitle}}</h3>{{/if}}
+        <button type="button" class="pb-open" data-action="open">Open Book</button>
+        <button type="button" class="pb-open pb-open-alt" data-action="toc">Contents</button>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isToc}}
+    <section class="pb-page" style="{{tocStyle}}">
+      <div class="pb-veil"></div><div class="pb-grain"></div>
+      <div class="pb-content">
+        <h2 class="pb-title">Contents</h2>
+        <ol class="pb-toc">
+          {{#each toc}}
+          <li style="padding-left:{{indent}}px"><a data-action="goto" data-index="{{index}}">{{name}}</a>{{#if marked}} <i class="fa-solid fa-bookmark pb-mark"></i>{{/if}}</li>
+          {{else}}
+          <li class="pb-empty">This book has no pages yet.</li>
+          {{/each}}
+        </ol>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if isPage}}
+    <section class="pb-page {{#if page.hasBg}}has-bg{{/if}}" style="{{page.style}}">
+      <div class="pb-veil"></div><div class="pb-grain"></div>
+      <div class="pb-content">
+        {{#if page.showTitle}}<h2 class="pb-title">{{page.name}}</h2>{{/if}}
+        {{{page.html}}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if ribbons.length}}
+    <nav class="pb-ribbons">
+      {{#each ribbons}}<a data-action="goto" data-index="{{index}}" data-tooltip="{{name}}">{{n}}</a>{{/each}}
+    </nav>
+    {{/if}}
+  </div>
+
+  {{#if isPage}}
+  <footer class="pb-nav">
+    <button type="button" data-action="prev"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+    <span>{{number}} / {{count}}</span>
+    <button type="button" data-action="next" {{#unless hasNext}}disabled{{/unless}}>Next <i class="fa-solid fa-arrow-right"></i></button>
+  </footer>
+  {{/if}}
+</div>
