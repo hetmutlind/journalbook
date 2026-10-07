@@ -25,5 +25,5 @@
   "styles": [
     "styles/party-book.css"
   ],
-  "download": "https://github.com/hetmutlind/journalbook/archive/refs/heads/main.zip"
+  "download": "https://github.com/hetmutlind/journalbook/releases/download/v1.0.0/party-book.zip"
 }
